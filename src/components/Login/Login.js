@@ -31,7 +31,7 @@ const Login = (props) => {
     };
 
     const validatePasswordHandler = () => {
-        setPasswordIsValid(enteredPassword.trim(). length > 6);
+        setPasswordIsValid(enteredPassword.trim().length > 6);
     };
 
     const submitHandler = (event) => {
