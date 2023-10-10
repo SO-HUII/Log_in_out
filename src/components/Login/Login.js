@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../UI/Card/Card";
 import classes from './Login.module.css';
 import Button from "../UI/Button/Button";
@@ -10,20 +10,21 @@ const Login = (props) => {
     const [passwordIsValid, setPasswordIsValid] = useState();
     const [formIsValid, setFormIsValid] = useState(false);
     
+    // 1. 모든 로그인 컴포넌트 함수 실행 후 useEffect 재실행
+    // 2. setFormIsValid, enteredEmail 혹은 enteredPassword가 마지막 컴포넌트 렌더링 주기에서 변경된 경우에만 실행
+    // 3. state 업데이트 함수는 기본적으로 리액트에 의해 절대 변경되지 않도록 보장되기 때문에 setFormIsValid 생략 가능
+    useEffect(() => {
+        setFormIsValid(
+            enteredEmail.includes('@') && enteredPassword.trim().length > 6
+        );
+    }, [enteredEmail, enteredPassword]);
+
     const emailChangeHandler = (event) => {
         setEnteredEmail(event.target.value);
-
-        setFormIsValid(
-            event.target.value.includes('@') && enteredPassword.trim().length > 6
-        );
     };
 
     const passwordChangeHandler = (event) => {
         setEnteredPassword(event.target.value);
-
-        setFormIsValid(
-            event.target.value.trim().length > 6 && enteredEmail.includes('@')
-        );
     };
 
     const validateEmailHandler = () => {
