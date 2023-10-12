@@ -14,9 +14,17 @@ const Login = (props) => {
     // 2. setFormIsValid, enteredEmail 혹은 enteredPassword가 마지막 컴포넌트 렌더링 주기에서 변경된 경우에만 실행
     // 3. state 업데이트 함수는 기본적으로 리액트에 의해 절대 변경되지 않도록 보장되기 때문에 setFormIsValid 생략 가능
     useEffect(() => {
-        setFormIsValid(
-            enteredEmail.includes('@') && enteredPassword.trim().length > 6
-        );
+        const identifier = setTimeout(() => {
+            console.log('checking form validity');
+            setFormIsValid(
+                enteredEmail.includes('@') && enteredPassword.trim().length > 6
+            );
+        }, 500);  // 500밀리초 후에만 해당 작업 수행
+
+        return () => {
+            console.log('clean up');
+            clearTimeout(identifier);  // 새로운 타이머를 설정하기 전 마지막 타이머 삭제
+        };
     }, [enteredEmail, enteredPassword]);
 
     const emailChangeHandler = (event) => {
