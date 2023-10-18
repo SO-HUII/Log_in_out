@@ -35,6 +35,7 @@ function App() {
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,  // isLoggedIn이 변경될 때마다 리액트에 의해 업데이트 됨.
+        onLogout: logoutHandler
       }}
     >
       <MainHeader onLogout={logoutHandler} />
