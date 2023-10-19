@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useContext } from "react";
 import Card from "../UI/Card/Card";
 import classes from './Login.module.css';
 import Button from "../UI/Button/Button";
+import AuthContext from "../../store/auth-context";
 
 // 컴포넌트 함수 바깥에 생성한 이유
 // because 해당 리듀서 함수 내부에서는 컴포넌트 함수 내부에서 만들어진 어떠한 데이터도 필요하지 않기 때문.
@@ -41,13 +42,15 @@ const Login = (props) => {
 
     const [emailState, dispatchEmail] = useReducer(emailReducer, { 
         value: '', 
-        isValid: false,
+        isValid: null,
     });
 
     const [passwordState, dispatchPassword] = useReducer(passwordReducer, { 
         value: '', 
-        isValid: false,
+        isValid: null,
     });
+
+    const authCtx = useContext(AuthContext);
 
     // inValid의 속성을 꺼내 상수인 emailIsValid, passwordIsValid에 저장
                   // 별칭 할당
@@ -103,7 +106,7 @@ const Login = (props) => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        props.onLogin(emailState.value, passwordState.value);
+        authCtx.onLogin(emailState.value, passwordState.value);
     };
 
     return(
